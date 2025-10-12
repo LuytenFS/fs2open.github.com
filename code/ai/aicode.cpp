@@ -4293,7 +4293,7 @@ float ai_path_0()
 //	--------------------------------------------------------------------------
 //	Alternate version of ai_path
 //  1. 
-float ai_path_1()
+float ai_path_1_2(bool allow_alt2_path_mode)
 {
 	int		num_points;
 	float		dot, dist_to_goal, dist_to_next, dot_to_next;
@@ -4311,8 +4311,6 @@ float ai_path_1()
 	Assert(Objects[aip->goal_objnum].type == OBJ_SHIP);
 
 	gobjp = &Objects[aip->goal_objnum];
-
-	bool alt2_pathing = (The_mission.ai_profile->ai_path_mode == AI_PATH_MODE_ALT2);
 
 	if (aip->path_start == -1) {
 		Assert(aip->goal_objnum >= 0 && aip->goal_objnum < MAX_OBJECTS);
@@ -4367,7 +4365,7 @@ float ai_path_1()
 	//    path code.  In docking, this is a special hack.
 	// 	  only attempt if "alt2" is selected within ai_profiles.tbl
 
-	if (alt2_pathing){
+	if (allow_alt2_path_mode){
 		if ((aip->mode != AIM_DOCK) || ((aip->path_cur-aip->path_start) < num_points - 2)) {
 			if ((aip->path_cur + aip->path_dir > aip->path_start) && (aip->path_cur + aip->path_dir < aip->path_start + num_points-2)) {
 				if ( timestamp_elapsed(aip->path_next_check_time)) {
@@ -4488,8 +4486,9 @@ float ai_path()
 		return ai_path_0();
 		break;
 	case AI_PATH_MODE_ALT1:
+		return ai_path_1_2(false);
 	case AI_PATH_MODE_ALT2:
-		return ai_path_1();
+		return ai_path_1_2(true);
 		break;
 	default:
 		Error(LOCATION, "Invalid path mode found: %d\n", The_mission.ai_profile->ai_path_mode);

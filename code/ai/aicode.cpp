@@ -4304,6 +4304,8 @@ float ai_path_1()
 
 	gobjp = &Objects[aip->goal_objnum];
 
+	bool alt2_pathing = (The_mission.ai_profile->ai_path_mode == AI_PATH_MODE_ALT2);
+
 	if (aip->path_start == -1) {
 		Assert(aip->goal_objnum >= 0 && aip->goal_objnum < MAX_OBJECTS);
 		int path_num;
@@ -4350,6 +4352,28 @@ float ai_path_1()
 	gpvp = (pvp != NULL) ? *pvp : *cvp;
 	gcvp = *cvp;
 	gnvp = *nvp;
+
+	//    See if can reach next point (as opposed to current point)
+	//    However, don't do this if docking and next point is last point.
+	//    That is, we don't want to pursue the last point under control of the
+	//    path code.  In docking, this is a special hack.
+	// 	  only attempt if "alt2" is selected within ai_profiles.tbl
+
+	if (alt2_pathing){
+		if ((aip->mode != AIM_DOCK) || ((aip->path_cur-aip->path_start) < num_points - 2)) {
+			if ((aip->path_cur + aip->path_dir > aip->path_start) && (aip->path_cur + aip->path_dir < aip->path_start + num_points-2)) {
+				if ( timestamp_elapsed(aip->path_next_check_time)) {
+					aip->path_next_check_time = timestamp( 3000 );
+					if (!pp_collide(&Pl_objp->pos, nvp, gobjp, 1.1f * Pl_objp->radius)) {
+						cvp = nvp;
+						aip->path_cur += aip->path_dir;
+						nvp = &Path_points[aip->path_cur].pos;
+					}
+				}
+			}
+		}
+	}
+
 
 	dist_to_goal = vm_vec_dist_quick(&Pl_objp->pos, &gcvp);
 	dist_to_next = vm_vec_dist_quick(&Pl_objp->pos, &gnvp);
@@ -4456,6 +4480,7 @@ float ai_path()
 		return ai_path_0();
 		break;
 	case AI_PATH_MODE_ALT1:
+	case AI_PATH_MODE_ALT2:
 		return ai_path_1();
 		break;
 	default:

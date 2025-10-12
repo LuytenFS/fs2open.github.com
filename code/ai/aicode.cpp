@@ -4364,8 +4364,8 @@ float ai_path_1_2(bool allow_alt2_path_mode)
 	//    That is, we don't want to pursue the last point under control of the
 	//    path code.  In docking, this is a special hack.
 	// 	  only attempt if "alt2" is selected within ai_profiles.tbl
-
 	if (allow_alt2_path_mode){
+		Warning(LOCATION, "Using alt2\n");
 		if ((aip->mode != AIM_DOCK) || ((aip->path_cur-aip->path_start) < num_points - 2)) {
 			if ((aip->path_cur + aip->path_dir > aip->path_start) && (aip->path_cur + aip->path_dir < aip->path_start + num_points-2)) {
 				if ( timestamp_elapsed(aip->path_next_check_time)) {

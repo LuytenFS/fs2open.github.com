@@ -75,6 +75,9 @@ static int Ss_delta_x, Ss_delta_y;	// used to offset the carried icon to make it
 float ShipSelectScreenShipRot = 0.0f;
 int ShipSelectModelNum = -1;
 
+// LuytenKy //
+int ShipSelectModelInstance = -1;
+
 int anim_timer_start = 0;
 //static matrix ShipScreenOrient = IDENTITY_MATRIX;
 
@@ -1752,6 +1755,10 @@ void start_ship_animation(int ship_class, int  /*play_sound*/)
 		// Load the necessary model file
 		ShipSelectModelNum = model_load(sip, true);
 		
+		ShipSelectModelInstance = model_create_instance(model_objnum_special::OBJNUM_NONE, ShipSelectModelNum);
+
+		model_set_up_techroom_instance(sip, ShipSelectModelInstance);
+
 		// page in ship textures properly (takes care of nondimming pixels)
 		model_page_in_textures(ShipSelectModelNum, ship_class);
 		

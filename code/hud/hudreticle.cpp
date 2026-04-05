@@ -243,7 +243,7 @@ void HudGaugeReticle::initBitmaps(char *fname)
 	}
 }
 
-void HudGaugeReticle::initFirepointDisplay(bool firepoint, int scaleX, int scaleY, int size) {
+void HudGaugeReticle::initFirepointDisplay(bool firepoint, float scaleX, float scaleY, float size) {
 	firepoint_display = firepoint;
 	firepoint_scale_x = scaleX;
 	firepoint_scale_y = scaleY;
@@ -377,7 +377,7 @@ void HudGaugeReticle::render(float  /*frametime*/, bool config)
 
 				int centerX = x + (bitmap_size_x / 2);
 				int centerY = y + (bitmap_size_y / 2);
-				renderCircle(fl2i(centerX + (fpi->xy.x * firepoint_scale_x)), fl2i(centerY + (fpi->xy.y * firepoint_scale_y)), firepoint_size, false, config);
+				renderCircle(fl2i(centerX + (fpi->xy.x * firepoint_scale_x)), fl2i(centerY + (fpi->xy.y * firepoint_scale_y)), fl2i(firepoint_size), false, config);
 			}
 		}
 	}

@@ -33241,6 +33241,12 @@ int query_operator_argument_type(int op, int argnum)
 		case OP_PLAYER_NOT_USE_AI:
 			return OPF_NONE;
 
+		case OP_SET_PLAYER_TARGET:
+			if (argnum == 0)
+				return OPF_SHIP;
+			else
+				return OPF_SUBSYSTEM_OR_NONE;
+
 		case OP_CREATE_BOLT:
 			if (argnum == 0)
 				return OPF_BOLT_TYPE;

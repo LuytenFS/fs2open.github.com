@@ -13936,19 +13936,21 @@ void sexp_set_player_target(int node)
 		return;
 	ship* shipp = &Ships[shipnum];
 	int objnum = shipp->objnum;
-	set_target_objnum(Player_ai, objnum);
-	// clear any previous subsystem target first
-	set_targeted_subsys(Player_ai, nullptr, objnum);
 	int n = CDR(node);
 	if (n >= 0) {
 		const char* subsys_name = CTEXT(n);
 		if (stricmp(subsys_name, SEXP_NONE_STRING) != 0) {
 			ship_subsys* ss = ship_get_subsys(shipp, subsys_name);
 			// target ship regardless of whether subsystem is destroyed
-			set_targeted_subsys(Player_ai, ss, objnum);
-			shipp->last_targeted_subobject[Player_num] = Player_ai->targeted_subsys;
+			shipp->last_targeted_subobject[Player_num] = ss;
+		} else {
+			shipp->last_targeted_subobject[Player_num] = nullptr;
 		}
+	} else {
+		shipp->last_targeted_subobject[Player_num] = nullptr;
 	}
+	// set_target_objnum will call hud_restore_subsystem_target which reads last_targeted_subobject
+	set_target_objnum(Player_ai, objnum);
 }
 
 // Luytenky

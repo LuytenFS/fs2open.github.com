@@ -13934,14 +13934,11 @@ void sexp_set_player_target(int node)
 	int shipnum = ship_name_lookup(CTEXT(node), 1);
 	if (shipnum < 0)
 		return;
-
 	ship* shipp = &Ships[shipnum];
 	int objnum = shipp->objnum;
 	set_target_objnum(Player_ai, objnum);
-
 	// clear any previous subsystem target first
 	set_targeted_subsys(Player_ai, nullptr, objnum);
-
 	int n = CDR(node);
 	if (n >= 0) {
 		const char* subsys_name = CTEXT(n);
@@ -13949,6 +13946,7 @@ void sexp_set_player_target(int node)
 			ship_subsys* ss = ship_get_subsys(shipp, subsys_name);
 			// target ship regardless of whether subsystem is destroyed
 			set_targeted_subsys(Player_ai, ss, objnum);
+			shipp->last_targeted_subobject[Player_num] = Player_ai->targeted_subsys;
 		}
 	}
 }

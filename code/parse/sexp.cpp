@@ -454,8 +454,6 @@ SCP_vector<sexp_oper> Operators = {
 	{ "validate-general-orders",        OP_VALIDATE_GENERAL_ORDERS,             2,  INT_MAX,    SEXP_ACTION_OPERATOR,   },  // MjnMixael
 	{ "cap-waypoint-speed",				OP_CAP_WAYPOINT_SPEED,					2,	2,			SEXP_ACTION_OPERATOR,	},
 	{ "set-wing-formation",				OP_SET_WING_FORMATION,					3,	INT_MAX,	SEXP_ACTION_OPERATOR,	},	// Goober5000
-	{ "set-player-target",				OP_SET_PLAYER_TARGET,					1,	2,			SEXP_ACTION_OPERATOR,	},	// LuytenKy
-	{ "clear-player-target",			OP_CLEAR_PLAYER_TARGET,					0,	0,			SEXP_ACTION_OPERATOR,	},	// LuytenKy
 
 	//Ship Status Sub-Category
 	{ "protect-ship",					OP_PROTECT_SHIP,						1,	INT_MAX,	SEXP_ACTION_OPERATOR,	},
@@ -704,6 +702,8 @@ SCP_vector<sexp_oper> Operators = {
 	{ "hud-force-sensor-static",		OP_HUD_FORCE_SENSOR_STATIC,				1,	1,			SEXP_ACTION_OPERATOR,	},	// MjnMixael
 	{ "hud-force-emp-effect",			OP_HUD_FORCE_EMP_EFFECT,				2,	3,			SEXP_ACTION_OPERATOR,	},	// MjnMixael
 	{ "set-squadron-wings",				OP_SET_SQUADRON_WINGS,			1,	MAX_SQUADRON_WINGS,	SEXP_ACTION_OPERATOR,	},	// Goober5000
+	{ "set-player-target",				OP_SET_PLAYER_TARGET,					1,	2,			SEXP_ACTION_OPERATOR,	},	// LuytenKy
+	{ "clear-player-target",			OP_CLEAR_PLAYER_TARGET,					0,	0,			SEXP_ACTION_OPERATOR,	},	// LuytenKy
 
 	//Nav Sub-Category
 	{ "add-nav-waypoint",				OP_NAV_ADD_WAYPOINT,					3,	4,			SEXP_ACTION_OPERATOR,	},	//kazan

@@ -47,7 +47,6 @@ GLuint Scene_luminance_texture;
 GLuint Scene_depth_texture;
 GLuint Scene_depth_texture_ms;
 GLuint Cockpit_depth_texture;
-GLuint Scene_stencil_buffer;
 
 GLuint Back_framebuffer;
 GLuint Back_texture;
@@ -308,12 +307,6 @@ void opengl_setup_scene_textures()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, Scene_texture_width, Scene_texture_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	opengl_set_object_label(GL_TEXTURE, Scene_depth_texture, "Scene depth texture");
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, Scene_depth_texture, 0);
-
-	//setup main stencil buffer
-	glGenRenderbuffers(1, &Scene_stencil_buffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, Scene_stencil_buffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Scene_texture_width, Scene_texture_height);
-	//glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Scene_stencil_buffer);
 
 	glReadBuffer(GL_COLOR_ATTACHMENT0);
 

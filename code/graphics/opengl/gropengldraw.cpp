@@ -291,7 +291,7 @@ void opengl_setup_scene_textures()
 		0,
 		GL_DEPTH_COMPONENT,
 		GL_FLOAT,
-		NULL);
+		nullptr);
 	opengl_set_object_label(GL_TEXTURE, Cockpit_depth_texture, "Cockpit depth texture");
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, Cockpit_depth_texture, 0);
@@ -320,7 +320,7 @@ void opengl_setup_scene_textures()
 		0,
 		GL_DEPTH_COMPONENT,
 		GL_FLOAT,
-		NULL);
+		nullptr);
 	opengl_set_object_label(GL_TEXTURE, Scene_depth_texture, "Scene depth texture");
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, Scene_depth_texture, 0);
 
@@ -563,7 +563,7 @@ void opengl_setup_scene_textures()
 			0,
 			GL_DEPTH_STENCIL,
 			GL_UNSIGNED_INT_24_8,
-			NULL);
+			nullptr);
 		opengl_set_object_label(GL_TEXTURE, Back_depth_texture, "Backbuffer depth texture");
 
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, Back_depth_texture, 0);

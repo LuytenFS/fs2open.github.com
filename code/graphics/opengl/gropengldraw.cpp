@@ -51,7 +51,6 @@ GLuint Cockpit_depth_texture;
 GLuint Back_framebuffer;
 GLuint Back_texture;
 GLuint Back_depth_texture;
-GLuint Back_stencil_buffer;
 
 GLuint Distortion_framebuffer = 0;
 GLuint Distortion_texture[2];
@@ -672,6 +671,21 @@ void opengl_scene_texture_shutdown()
 		Scene_framebuffer = 0;
 	}
 
+	if (Back_texture) {
+		glDeleteTextures(1, &Back_texture);
+		Back_texture = 0;
+	}
+
+	if (Back_depth_texture) {
+		glDeleteTextures(1, &Back_depth_texture);
+		Back_depth_texture = 0;
+	}
+
+	if (Back_framebuffer) {
+		glDeleteFramebuffers(1, &Back_framebuffer);
+		Back_framebuffer = 0;
+	}
+	
 	glDeleteTextures(2, Distortion_texture);
 	Distortion_texture[0] = 0;
 	Distortion_texture[1] = 0;

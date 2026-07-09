@@ -762,6 +762,7 @@ void spin_up_mp_collision() {
 void spin_down_mp_collision() {
 	threading::spin_down_threaded_task();
 	collision_processing_done.store(true);
+	threading::spin_down_wait_complete();
 }
 
 void queue_mp_collision(uint ctype, const obj_pair& colliding) {
@@ -1207,14 +1208,16 @@ void collide_mp_worker_thread(size_t threadIdx) {
 						check_collision = collide_ship_ship_check;
 						break;
 					default:
-						UNREACHABLE("Got non MP-compatible collision type!");
+						UNREACHABLE("Got non MP-compatible collision type %d!", collision_check.ctype);
+						thread.queue_length.fetch_sub(1, std::memory_order_release); // keep the counter balanced
+						continue;                                                    // skip the bad pair
 				}
 
-				auto&& [check_again, collision_data_maybe, collision_fnc] = check_collision(&collision_check.objs);
+				auto&& [never_check_again, collision_data_maybe, collision_fnc] = check_collision(&collision_check.objs);
 
 				{
 					std::scoped_lock lock{thread.result_mutex};
-					thread.queue_results->emplace_back(collision_thread_data::collision_queue_result{collision_check.objs, check_again, collision_data_maybe, collision_fnc});
+					thread.queue_results->emplace_back(collision_thread_data::collision_queue_result{collision_check.objs, never_check_again, collision_data_maybe, collision_fnc});
 				}
 				thread.result_length.fetch_add(1, std::memory_order_release);
 				thread.queue_length.fetch_sub(1, std::memory_order_release);

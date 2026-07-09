@@ -47,7 +47,7 @@ void TeamLoadoutDialog::accept()
 	if (_model->apply()) {
 		QDialog::accept();
 	}
-	// else: validation failed, don’t close
+	// else: validation failed, don't close
 }
 
 void TeamLoadoutDialog::reject()
@@ -643,7 +643,7 @@ void TeamLoadoutDialog::on_copyLoadoutToOtherTeamsButton_clicked()
 	case QMessageBox::Cancel:
 		break;
 	default:
-		UNREACHABLE("Bad return value from confirmation message box in the Loadout dialog editor.");
+		UNREACHABLE("Bad return value %d from confirmation message box in the Loadout dialog editor.", ret);
 		break;
 	}
 
@@ -871,7 +871,7 @@ void TeamLoadoutDialog::on_shipsList_itemChanged(QTableWidgetItem* changed)
 			return; // not a column we handle
 	}
 
-	// Now repaint only the affected rows from the model’s *current* state.
+	// Now repaint only the affected rows from the model's *current* state.
 	refreshShipRows(selRows);
 }
 
@@ -937,7 +937,7 @@ void TeamLoadoutDialog::on_weaponsList_itemChanged(QTableWidgetItem* changed)
 			return; // not a column we handle
 	}
 
-	// Now repaint only the affected rows from the model’s *current* state.
+	// Now repaint only the affected rows from the model's *current* state.
 	refreshWeaponRows(selRows);
 }
 
@@ -993,7 +993,7 @@ void TeamLoadoutDialog::on_shipVarsList_itemChanged(QTableWidgetItem* changed)
 			return; // not a column we handle
 	}
 
-	// Now repaint only the affected rows from the model’s *current* state.
+	// Now repaint only the affected rows from the model's *current* state.
 	refreshShipVarRows(selRows);
 }
 
@@ -1049,7 +1049,7 @@ void TeamLoadoutDialog::on_weaponVarsList_itemChanged(QTableWidgetItem* changed)
 			return; // not a column we handle
 	}
 
-	// Now repaint only the affected rows from the model’s *current* state.
+	// Now repaint only the affected rows from the model's *current* state.
 	refreshWeaponVarRows(selRows);
 }
 

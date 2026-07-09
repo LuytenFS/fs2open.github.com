@@ -60,8 +60,10 @@ private slots:
 	void on_nebulaLightningCombo_currentIndexChanged(int index);
 	void on_poofsListWidget_itemSelectionChanged();
 	void on_shipTrailsCheckBox_toggled(bool checked);
-	void on_fogNearDoubleSpinBox_valueChanged(double arg1);
-	void on_fogFarDoubleSpinBox_valueChanged(double arg1);
+	void on_fog1000mVisDoubleSpinBox_valueChanged(double arg1);
+	void on_fogNearDistanceDoubleSpinBox_valueChanged(double arg1);
+	void on_fogSkyboxClipDoubleSpinBox_valueChanged(double arg1);
+	void on_fogClipDoubleSpinBox_valueChanged(double arg1);
 	void on_displayBgsInNebulaCheckbox_toggled(bool checked);
 	void on_overrideFogPaletteCheckBox_toggled(bool checked);
 	void on_fogOverrideRedSpinBox_valueChanged(int arg1);
@@ -92,7 +94,7 @@ private slots:
 	void on_forceClampCheckBox_toggled(bool checked);
 	void on_noZBufferCheckBox_toggled(bool checked);
 	void on_noCullCheckBox_toggled(bool checked);
-	void on_noGlowmapsCheckBox_toggled(bool checked);
+	void on_noGlowMapsCheckBox_toggled(bool checked);
 
 	// Misc
 	void on_numStarsSlider_valueChanged(int value);
@@ -100,6 +102,9 @@ private slots:
 	void on_envMapButton_clicked();
 	void on_envMapEdit_textChanged(const QString& arg1);
 	void on_lightingProfileCombo_currentIndexChanged(int index);
+
+protected:
+	void closeEvent(QCloseEvent* e) override;
 
 private: // NOLINT(readability-redundant-access-specifiers)
     std::unique_ptr<Ui::BackgroundEditor> ui;

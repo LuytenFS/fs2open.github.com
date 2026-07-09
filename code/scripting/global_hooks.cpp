@@ -86,6 +86,14 @@ const std::shared_ptr<Hook<>> OnGameplayStart = Hook<>::Factory("On Gameplay Sta
 	"Invoked when the gameplay portion of a mission starts.",
 	{ {"Player", "object", "The player object."} });
 
+const std::shared_ptr<Hook<>> OnPhotoModeStarted = Hook<>::Factory("On Photo Mode Started",
+	"Invoked when Photo Mode is enabled.",
+	{});
+
+const std::shared_ptr<Hook<>> OnPhotoModeEnded = Hook<>::Factory("On Photo Mode Ended",
+	"Invoked when Photo Mode is disabled.",
+	{});
+
 const std::shared_ptr<Hook<ControlActionConditions>> OnAction = Hook<ControlActionConditions>::Factory("On Action",
 	"Invoked whenever a user action was invoked through control input.",
 	{ {"Action", "string", "The name of the action that was executed."} });
@@ -131,6 +139,16 @@ const std::shared_ptr<Hook<ShipSourceConditions>> OnAfterburnerStart = Hook<Ship
 const std::shared_ptr<Hook<ShipSourceConditions>> OnAfterburnerEnd = Hook<ShipSourceConditions>::Factory("On Afterburner Stop",
 	"Invoked whenever a ship stops using its afterburners",
 	{ { "Ship", "ship", "The ship which had been using its afterburners" } });
+
+const std::shared_ptr<Hook<>> OnSupportRearmStarted = Hook<>::Factory("On Support Rearm Started",
+	"Invoked when a support ship begins actively rearming/repairing a target ship.",
+	{ { "Support Ship", "ship", "The support ship performing the service." },
+	  { "Target Ship", "ship", "The ship being serviced by the support ship." } });
+
+const std::shared_ptr<Hook<>> OnSupportRearmFinished = Hook<>::Factory("On Support Rearm Finished",
+	"Invoked when a support ship finishes rearming/repairing a target ship.",
+	{ { "Support Ship", "ship", "The support ship that performed the service." },
+	  { "Target Ship", "ship", "The ship that was serviced." } });
 
 const std::shared_ptr<Hook<ShipSourceConditions>> OnWaypointsDone = Hook<ShipSourceConditions>::Factory("On Waypoints Done",
 	"Invoked whenever a ship stops using its afterburners",
@@ -289,6 +307,14 @@ const std::shared_ptr<Hook<WeaponDeathConditions>> OnMissileDeath = Hook<WeaponD
 		{"Object", "object", "The object that the weapon hit - a ship, asteroid, or piece of debris.  Always set but could be invalid if there is no other object.  If this missile was destroyed by another weapon, the 'other object' will be invalid but the DestroyedByWeapon flag will be set."},
 	});
 
+const std::shared_ptr<OverridableHook<WeaponProximityTriggeredConditions>> OnWeaponProximityTriggered = OverridableHook<WeaponProximityTriggeredConditions>::Factory(
+	"On Weapon Proximity Triggered", "Called when a ship passes a weapon's proximity checks. The weapon may then detonate immediately or, if it is a mine with a chase duration, enter chase mode.",
+	{
+		{"Weapon", "weapon", "The weapon that was triggered."},
+		{"Ship", "object", "The ship whose proximity triggered the weapon."},
+		{"Position", "vector", "The world coordinates of the weapon at the time of triggering."},
+	});
+
 const std::shared_ptr<Hook<>> OnBeamDeath = Hook<>::Factory(
 	"On Beam Death", "Called when a beam has been removed from the mission (whether by finishing firing, destruction of turret, etc.).",
 	{
@@ -426,7 +452,7 @@ const std::shared_ptr<OverridableHook<CommOrderConditions>> OnHudCommOrderIssued
 		{"Recipient", "oswpt", "The recipient of the order."},
 		{"Target", "ship", "The target if the order, if any. Usually the Player's current target."},
 		{"Subsystem", "subsystem", "The target subsystem, if any. Usually the Player's current target."},
-		{"Order", "enumeration", "The order issued. Will be one of the SQUAD_MESSAGE enumerations."},
+		{"Order", "enumeration", "The order issued. Will be one of the SQUAD_MESSAGE_* enumerations."},
 		{"Name", "string", "The name of the order as it appears in the squad message menu. Useful for LuaAI orders."}
 	});
 
